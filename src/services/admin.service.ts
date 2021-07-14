@@ -1,5 +1,6 @@
 import { Ambulance } from "../entities/ambulance.entity";
 import { Insurance } from "../entities/insurance";
+import { User } from "../entities/user.entity";
 
 
 export class AdminService {
@@ -42,6 +43,18 @@ export class AdminService {
 
     async updateAmbulance( id:string , email: string ) {
         return await Ambulance.findByIdAndUpdate(id , { email })
+    }
+
+    async findAllusers() {
+        return await User.find()
+    }
+
+    async findUser(id: string) {
+        return await User.findById(id)
+    }
+
+    async changeUserStatus( id: string , io: any ) {
+        
     }
 
 }

@@ -44,9 +44,17 @@ AdminController.put('/ambulance/:id', async function (req: Request, res: Respons
     res.json(await adminService.updateAmbulance( req.params.id , req.body.email))
 })
 
+AdminController.get('/user/all', async function (req: Request, res: Response) {
+    res.json(await adminService.findAllusers())
+})
+
+AdminController.get('/user/:id', async function (req: Request, res: Response) {
+    res.json(await adminService.findUser(req.params.id))
+})
+
 AdminController.post('/confirmeStatus', async function (req: any, res: Response) {
     // @ts-ignore:
-    //res.json(await changeUserStatus( req.user.id , req.app.io ) )
+    res.json(await adminService.changeUserStatus( req.user.id , req.app.io ) )
 })
 
 export default AdminController
