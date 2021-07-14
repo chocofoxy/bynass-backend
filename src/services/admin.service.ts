@@ -58,10 +58,13 @@ export class AdminService {
         const user = await User.findById(id)
         user.status = 'confirmed'
         const ambulance = await this.findAmbulance(ambulanceId)
-        console.log(user.familyMembers)
-        //io.to(id).emit('emergency_confirmed', { message: `we have an emergency for ${ user.name }`  } );
-        await sendEmail("We have an emergency", `<h1> we have an emergency for ${user.name} , contact him please <h1>`, user.insurance)
-        await sendEmail("We have an emergency", `<h1> we have an emergency for ${user.name} , contact him please <h1>`, ambulance.email)
+        //console.log(user.familyMembers)
+
+        io.to(id).emit('emergency_confirmed', { message: `we have an emergency for ${ user.name }`  } );
+        io.emit('emergency_confirmed', { message: `we have a pending emergency for ${ user.name }`  } );
+
+        await sendEmail("We have an emergency", `<h6> we have an emergency for ${user.name} , contact him please <h6>`, user.insurance)
+        await sendEmail("We have an emergency", `<h6> we have an emergency for ${user.name} , contact him please <h6>`, ambulance.email)
         return User.findByIdAndUpdate(user._id, user)
     }
 

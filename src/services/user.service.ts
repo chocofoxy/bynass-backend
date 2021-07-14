@@ -1,6 +1,7 @@
 import { UserInput, User } from "../entities/user.entity"
 import { Socket } from 'socket.io'
 import * as bcrypt from 'bcrypt';
+import { sendEmail } from "../tools/mailer";
 
 export class UserService {
 
@@ -22,9 +23,11 @@ export class UserService {
         const familyMember = await this.findUserByEmail(email)
         const user = await this.findUserById(id)
         if (familyMember && user) {
+            await sendEmail("You have been added as a family member", `<h6> ${user.name} added you as a family member <h6>`, familyMember.email)
             user.familyMembers.push(familyMember._id)
             return await User.findByIdAndUpdate(user._id, user)
         }
+        await sendEmail("You are invited to be family member", `<h6> ${user.name} invited you to be a family member on our website <h6>`, email)
     }
     
     async changeUserStatus ( id: string , io: Socket )  {
