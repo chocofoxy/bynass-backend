@@ -29,7 +29,7 @@ AdminController.get('/ambulance/:id', async function (req: Request, res: Respons
 })
 
 AdminController.post('/ambulance', async function (req: Request, res: Response) {
-    res.json(await adminService.addAmbulance( req.params.id ))
+    res.json(await adminService.addAmbulance( req.body.email ))
 })
 
 AdminController.get('/ambulances', async function (req: Request, res: Response) {
