@@ -56,5 +56,8 @@ AdminController.post('/confirmeStatus', async function (req: any, res: Response)
     // @ts-ignore:
     res.json(await adminService.changeUserStatus( req.user.id , req.app.io ) )
 })
+AdminController.post('/declineStatus', async function (req: any, res: Response) {
+    res.json(await adminService.normalizeUserStatus( req.user.id ) )
+})
 
 export default AdminController

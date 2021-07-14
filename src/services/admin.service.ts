@@ -63,4 +63,10 @@ export class AdminService {
         return User.findByIdAndUpdate(user._id,user)
     }
 
+    async normalizeUserStatus( id: string ) {
+        const user = await User.findById(id)
+        user.status = 'normal'
+        return User.findByIdAndUpdate(user._id,user)
+    }
+
 }
