@@ -1,20 +1,17 @@
-import { createUser } from "../services/user.service"
+import { addFamilyToUser, createUser, findUserById } from "../services/user.service"
 import { Request , Response, Router } from "express"
+import passport from "../midlewares/auth.middleware"
 
 var UserController = Router()
 
-UserController.get('/register', async function (req: Request, res: Response) {
-    await createUser({
-        name: req.params.name,
-        email: req.params.email,
-        phone: req.params.phone,
-        password: req.params.password
-    })
+UserController.use(passport.authenticate('jwt', { session: false }))
+
+UserController.get('/:id', async function (req: Request, res: Response) {
+    res.json(await findUserById( req.params.id ))
 })
 
-UserController.get('/about', function (req: Request, res: Response) {
-    res.json({ message: 'ok' })
+UserController.post('/addFamily', async function (req: any, res: Response) {
+    res.json(await addFamilyToUser( req.user.id , req.body.email ) )
 })
-
 
 export default UserController

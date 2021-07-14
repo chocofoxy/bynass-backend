@@ -7,7 +7,18 @@ export const createUser = async ( data: UserInput ) => {
 }
 
 export const findUserByEmail = async ( email: String ) => {
-
     return await User.find({ email }) ;
+}
 
+export const findUserById = async ( id: String ) => {
+    return await User.find({ _id: id }).populate(['familyMembers','notifications']) ;
+}
+
+export const addFamilyToUser = async ( id: string , email: string ) => {
+    const familyMember = await findUserByEmail(email)
+    const user = await findUserById(id)
+    if (familyMember && user) {
+        user.familyMembers.push(familyMember._id)
+        return await User.findByIdAndUpdate(user._id, user)
+    }
 }
