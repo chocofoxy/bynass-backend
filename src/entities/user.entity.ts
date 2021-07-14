@@ -1,8 +1,10 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
+require('./notification.entity')
 
 export interface UserInput {
     name: string;
     email: string;
+  //  image: string;
     phone: string;
     password: string;
 }
@@ -26,4 +28,4 @@ export const UserSchema = new Schema({
 });
 
 
-export const User = model('User', UserSchema);
+export const User = models.User || model('User', UserSchema);

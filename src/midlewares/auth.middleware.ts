@@ -10,8 +10,6 @@ import * as bcrypt from 'bcrypt';
 export const opts = { 
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() ,
   secretOrKey: 'secret',
-  issuer: 'accounts.examplesoft.com',
-  audience: 'yoursite.net'
 }
 
 
@@ -35,7 +33,7 @@ passport.use(new LocalStrategy({
 ))
 
 passport.use(new JwtStrategy(opts, function (jwt_payload:any, done:any) {
-  User.findOne({ id: jwt_payload.sub }, function (err:any, user:any ) {
+  User.findOne({ _id: jwt_payload.id }, function (err:any, user:any ) {
     if (err) {
       return done(err, false);
     }

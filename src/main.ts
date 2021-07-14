@@ -5,6 +5,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 import { Server } from "socket.io";
+import AdminController from './controllers/admin.controller';
 import AuthController from './controllers/auth.controller';
 import UserController from './controllers/user.controller';
 
@@ -22,7 +23,8 @@ import UserController from './controllers/user.controller';
 
     app.use('/user', UserController)
     app.use('/auth', AuthController)
-
+    app.use('/admin',AdminController)
+    
     // @ts-ignore:
     app.io = io
 
