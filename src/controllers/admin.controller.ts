@@ -12,7 +12,7 @@ AdminController.post('/insurance', async function (req: Request, res: Response) 
     res.json(await adminService.addInsurance( req.body.email ))
 })
 
-AdminController.get('/insurance/all', async function (req: Request, res: Response) {
+AdminController.get('/insurances', async function (req: Request, res: Response) {
     res.json(await adminService.findAllInsurance())
 })
 
@@ -32,7 +32,7 @@ AdminController.post('/ambulance', async function (req: Request, res: Response) 
     res.json(await adminService.addAmbulance( req.params.id ))
 })
 
-AdminController.get('/ambulance/all', async function (req: Request, res: Response) {
+AdminController.get('/ambulances', async function (req: Request, res: Response) {
     res.json(await adminService.findAllAmbulance())
 })
 
@@ -44,7 +44,7 @@ AdminController.put('/ambulance/:id', async function (req: Request, res: Respons
     res.json(await adminService.updateAmbulance( req.params.id , req.body.email))
 })
 
-AdminController.get('/user/all', async function (req: Request, res: Response) {
+AdminController.get('/users', async function (req: Request, res: Response) {
     res.json(await adminService.findAllusers())
 })
 
