@@ -24,12 +24,12 @@ import UserController from './controllers/user.controller';
     app.use('/user', UserController)
     app.use('/auth', AuthController)
     app.use('/admin',AdminController)
-    
+
     // @ts-ignore:
     app.io = io
 
     io.on('connection', (socket: any) => {
-        console.log('a user connected');
+        
     });
 
     app.listen(3000, () => {

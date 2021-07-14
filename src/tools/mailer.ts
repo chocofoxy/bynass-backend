@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-export const sendEmail = ( template:any , email:any ) => {
+export const sendEmail = ( object:string, template:string , email:string ) => {
 
     const transporter = nodemailer.createTransport({
         host: "smtp-relay.sendinblue.com",
@@ -15,7 +15,7 @@ export const sendEmail = ( template:any , email:any ) => {
     transporter.sendMail({
         from: 'bynass@gmail.com' , // sender address
         to: email , // list of receivers
-        subject: " Tynass home confirmation ", // Subject line
+        subject: object, // Subject line
         text: "Hello world?", // plain text body
         html: template // html body
     });

@@ -2,31 +2,41 @@ import { UserInput, User } from "../entities/user.entity"
 import { Socket } from 'socket.io'
 import * as bcrypt from 'bcrypt';
 
-export const createUser = async ( data: UserInput ) => {
-    data.password = await bcrypt.hash(data.password,1);   
-    const user = await User.create(data);
-    return user
-}
+export class UserService {
 
-export const findUserByEmail = async ( email: String ) => {
-    return await User.findOne({ email }) ;
-}
-
-export const findUserById = async ( id: String ) => {
-    return await User.findOne({ _id: id }).populate(['familyMembers','notifications']) ;
-}
-
-export const addFamilyToUser = async ( id: string , email: string ) => {
-    const familyMember = await findUserByEmail(email)
-    const user = await findUserById(id)
-    if (familyMember && user) {
-        user.familyMembers.push(familyMember._id)
+    async createUser( data: UserInput )  {
+        data.password = await bcrypt.hash(data.password,1);   
+        const user = await User.create(data);
+        return user
+    }
+    
+    async findUserByEmail( email: String )  {
+        return await User.findOne({ email }) ;
+    }
+    
+    async findUserById( id: String )  {
+        return await User.findOne({ _id: id }).populate(['familyMembers','notifications']) ;
+    }
+    
+    async addFamilyToUser( id: string , email: string )  {
+        const familyMember = await this.findUserByEmail(email)
+        const user = await this.findUserById(id)
+        if (familyMember && user) {
+            user.familyMembers.push(familyMember._id)
+            return await User.findByIdAndUpdate(user._id, user)
+        }
+    }
+    
+    async changeUserStatus ( id: string , io: Socket )  {
+        const user = await this.findUserById(id)
+        user.status = 'pending'
+        return await User.findByIdAndUpdate(user._id, user)
+    }
+    
+    async setInsurance ( id: string , email: string ) {
+        const user = await this.findUserById(id)
+        user.insurance = email
         return await User.findByIdAndUpdate(user._id, user)
     }
 }
 
-export const changeUserStatus = async  ( id: string , io: Socket ) => {
-    const user = await findUserById(id)
-    user.status = 'pending'
-    return await User.findByIdAndUpdate(user._id, user)
-}

@@ -1,6 +1,7 @@
 import { Ambulance } from "../entities/ambulance.entity";
 import { Insurance } from "../entities/insurance";
 import { User } from "../entities/user.entity";
+import { sendEmail } from "../tools/mailer";
 
 
 export class AdminService {
@@ -53,8 +54,13 @@ export class AdminService {
         return await User.findById(id)
     }
 
-    async changeUserStatus( id: string , io: any ) {
-        
+    async changeUserStatus( id: string , ambulanceId: string , io: any ) {
+        const user = await User.findById(id)
+        user.status = 'confirmed'
+        const ambulance = await this.findAmbulance(ambulanceId)
+        sendEmail("We have an emergency", ambulance.email , `<h1> we have an emergency for ${ user.name } <h1>`)
+        sendEmail("We have an emergency", ambulance.email , `<h1> we have an emergency for ${ user.name } <h1>`)
+        return User.findByIdAndUpdate(user._id,user)
     }
 
 }

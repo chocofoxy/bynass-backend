@@ -5,4 +5,4 @@ export const InsuranceSchema = new Schema({
 });
 
 
-export const Insurance = models.Ambulance || model('Ambulance', InsuranceSchema);
+export const Insurance = models.Insurance || model('Insurance', InsuranceSchema);
