@@ -9,8 +9,9 @@ const userService = new UserService()
 
 UserController.use(passport.authenticate('jwt', { session: false }))
 
-UserController.get('/:id', async function (req: Request, res: Response) {
-    res.json(await userService.findUserById( req.params.id ))
+UserController.get('/current', async function (req: Request, res: Response) {
+    // @ts-ignore:
+    res.json(await userService.findUserById( req.user.id ))
 })
 
 UserController.post('/addFamily', async function (req: any, res: Response) {

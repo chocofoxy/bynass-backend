@@ -16,7 +16,7 @@ AuthController.post('/register', async function (req: Request, res: Response) {
     res.json(user)
 })
 
-AuthController.get('/login', passport.authenticate('local',{ session: false }), function (req: any, res: Response) {
+AuthController.post('/login', passport.authenticate('local',{ session: false }), function (req: any, res: Response) {
     const user = req.user
     // @ts-ignore:
     res.json({ token: jwt.sign( { id: user._id , email: user.email } , opts.secretOrKey ) })

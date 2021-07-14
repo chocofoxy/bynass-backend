@@ -30,6 +30,7 @@ export class UserService {
     async changeUserStatus ( id: string , io: Socket )  {
         const user = await this.findUserById(id)
         user.status = 'pending'
+        io.emit('emergency_pending', { message: `we have a pending emergency for ${ user.name }`  } );
         return await User.findByIdAndUpdate(user._id, user)
     }
     
