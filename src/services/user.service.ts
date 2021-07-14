@@ -23,11 +23,11 @@ export class UserService {
         const familyMember = await this.findUserByEmail(email)
         const user = await this.findUserById(id)
         if (familyMember && user) {
-            await sendEmail("You have been added as a family member", `<h6> ${user.name} added you as a family member <h6>`, familyMember.email)
+            await sendEmail("You have been added as a family member", ` ${user.name} added you as a family member `, familyMember.email)
             user.familyMembers.push(familyMember._id)
             return await User.findByIdAndUpdate(user._id, user)
         }
-        await sendEmail("You are invited to be family member", `<h6> ${user.name} invited you to be a family member on our website <h6>`, email)
+        await sendEmail("You are invited to be family member", ` ${user.name} invited you to be a family member on our website `, email)
     }
     
     async changeUserStatus ( id: string , io: Socket )  {

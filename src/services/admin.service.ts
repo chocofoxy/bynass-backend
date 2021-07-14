@@ -63,8 +63,8 @@ export class AdminService {
         io.to(id).emit('emergency_confirmed', { message: `we have an emergency for ${ user.name }`  } );
         io.emit('emergency_confirmed', { message: `we have a pending emergency for ${ user.name }`  } );
 
-        await sendEmail("We have an emergency", `<h6> we have an emergency for ${user.name} , contact him please <h6>`, user.insurance)
-        await sendEmail("We have an emergency", `<h6> we have an emergency for ${user.name} , contact him please <h6>`, ambulance.email)
+        await sendEmail("We have an emergency", ` we have an emergency for ${user.name} , contact him please `, user.insurance)
+        await sendEmail("We have an emergency", ` we have an emergency for ${user.name} , contact him please `, ambulance.email)
         return User.findByIdAndUpdate(user._id, user)
     }
 
