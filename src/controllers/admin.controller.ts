@@ -52,12 +52,13 @@ AdminController.get('/user/:id', async function (req: Request, res: Response) {
     res.json(await adminService.findUser(req.params.id))
 })
 
-AdminController.post('/confirmeStatus', async function (req: any, res: Response) {
+AdminController.post('/confirmeStatus/:id/:ambulanceId', async function (req: any, res: Response) {
     // @ts-ignore:
-    res.json(await adminService.changeUserStatus( req.user.id , req.app.io ) )
+    res.json(await adminService.changeUserStatus( req.params.id  ,req.params.ambulanceId , req.app.io ) )
 })
-AdminController.post('/declineStatus', async function (req: any, res: Response) {
-    res.json(await adminService.normalizeUserStatus( req.user.id ) )
+
+AdminController.post('/declineStatus/:id', async function (req: any, res: Response) {
+    res.json(await adminService.normalizeUserStatus( req.params.id ) )
 })
 
 export default AdminController
