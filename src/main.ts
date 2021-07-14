@@ -10,7 +10,7 @@ import UserController from './controllers/user.controller';
 
 (async () => {
 
-    await connect('mongodb+srv://root:root@cluster0.y4ni3.mongodb.net/Database', {
+    await connect('mongodb+srv://root:root@cluster0.y4ni3.mongodb.net/bynass', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
@@ -22,7 +22,10 @@ import UserController from './controllers/user.controller';
 
     app.use('/user', UserController)
     app.use('/auth', AuthController)
-    
+
+    // @ts-ignore:
+    app.io = io
+
     io.on('connection', (socket: any) => {
         console.log('a user connected');
     });

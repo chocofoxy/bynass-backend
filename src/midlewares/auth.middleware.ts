@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local').Strategy,
 
 import * as bcrypt from 'bcrypt';
 
-const opts = { 
+export const opts = { 
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() ,
   secretOrKey: 'secret',
   issuer: 'accounts.examplesoft.com',

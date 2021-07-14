@@ -1,4 +1,4 @@
-import { Document, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 export interface UserInput {
     name: string;
@@ -9,11 +9,20 @@ export interface UserInput {
 
 export const UserSchema = new Schema({
     name: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true
+    },
     phone: Number,
-    familyMembers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    password: String,
+    status: {
+        type: String,
+        enum : ['normal','pending', 'confirmed'],
+        default: 'normal'
+    },
+    familyMembers: { type: [{ type: Schema.Types.ObjectId, ref: 'User' }] , default: [] },
     insurance: String,
-    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
+    notifications: { type: [{ type: Schema.Types.ObjectId, ref: 'Notification' }] , default: [] },
 });
 
 
